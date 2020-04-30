@@ -305,3 +305,42 @@ footer h4{
 .tableSearch:focus{
     background-color: #fefff0; transition-duration: 0.5s;
 }
+
+
+.navimg{
+    width: 35px;
+}
+#navbar {
+    background-color: white;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: block;
+    transition: top 0.3s;
+    position: fixed !important;
+    margin-left: -8px;
+    padding: 5px;
+    box-shadow: 0 8px 8px rgba(0,0,0,0.08), 0 3px 6px rgba(0,0,0,0.23);
+}
+.navlogo{
+    float: left;
+    display: block;
+    padding: 10px;
+}
+
+.navlink{
+    float: right;
+    color: #414042;
+    display: block;
+    text-align: center;
+    padding: 15px;
+    margin-right: 10px;
+    text-decoration: none;
+    font-size: 17px;
+    transition: 0.5s;
+}
+
+#navbar a:hover {
+    color: #ffc826;
+    transition: 0.5s;
+}
