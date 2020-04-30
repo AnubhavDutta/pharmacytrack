@@ -1,0 +1,114 @@
+{%extends "template.html"%}
+{%block content%}
+<center>
+    <div id="modifybox" class="customalert">
+    <div class="alertcontent">
+    <h4 id="facilityName"></h4>
+    <form method="POST" action="/" autocomplete="off">
+    <input type="hidden" name="hospnumber" id="hospnumber">
+    <label>Current Status</label>
+    <select required class="forminput" id="status" name="status" style="height: 35px;">
+        <option value="0" selected>Closed</option>
+        <option value="1">Open</option>
+    </select>
+    <br>
+    <label>Administrator Key</label>
+    <input type="password" required class="forminput" id="pw" name="pw">
+    <br>
+    <button class="alertbtn save" id="saveit" name="saveit" type="submit">Save</button>
+    </form>
+    <button id="cancel" class="alertbtn cancel" style="margin-top: 7px;">Cancel</button>
+    </div>
+    </div>
+
+    <div class="card">
+        <p style="text-align: left; padding: 20px;">
+            This Web Application will help the consumers to keep track of the open medical stored 
+            around their neighbourhood. If and when the an emergence situation arises,
+            People can have access to real time information about the infrastructure and resources and
+            take the appropriate decisions.
+        </p>
+        <div class="addhospitalarea hidder" id="helpform">
+            <form style="display: inline;" action="/nearby/" type="submit" method="POST">
+            <input type="hidden" name="lat" id="lat">
+            <input type="hidden"name="long" id="long">
+            <a href="/nearby/"><button class="helpnow"><i class="fa fa-heartbeat" aria-hidden="true"></i> &nbsp Show Nearby</button></a>
+            </form>
+            <a href="/">
+            <button class="newhospital" style="margin-top:15px;">
+            Home
+            </button>
+            </a>
+            
+            <a href="/new/"><button class="newhospital"> &nbsp New Pharmacy</button></a>
+        </div>
+        <div style="text-align: left;padding: 20px;">
+        {%if near%}
+            <p>Your nearest pharmacies are displayed below</p>
+        {%endif%}
+        </div>
+        <center>
+            <input type="text" id="tableSearch" class="tableSearch" placeholder="Search for hospitals...">
+        </center>
+        <div style="overflow-x:auto;" id="tableArea" class="tableArea"></div>
+    </div>
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } 
+            else { 
+                $("#helpform").hide("fast","linear");
+                $("#lat").val(28.704);
+                $("#long").val(77.102);
+            }
+        }
+        function showPosition(position) {
+            $("#lat").val(position.coords.latitude);
+            $("#long").val(position.coords.longitude);
+        }
+        getLocation();
+
+        List=[];
+        {%for i in info%}
+
+        var hospital = {
+            number: {{i['number']}},
+            name: "{{i['name']}}",
+            lat:{{i['lat']}},
+            long:{{i['long']}},
+            city: "{{i['city']}}",
+            status: {{i['status']}},            
+        };
+        List.push(hospital);
+        {% endfor %}
+    
+        function showCards(){
+            table=document.createElement('table');
+            table.classList.add('cardTable');
+            item="<table class='hospitalTable' cellspacing='0'><tr><th class='long'>Facility Name</th><th class='small hidder'>Location</th><th class='small hidder'>city</th><th class='small hidder'>Status</th><th class='medium hidder'>Edit</th></tr>";
+            for (i=0 ; i<List.length ; i++){
+                item=item+ "<tr><div class='hoverable'><td id='name" + List[i].number + "'>"+List[i].name+"</td>";
+
+                item=item+"<td id='location"+List[i].number+"' class='hidder'>"+List[i].lat+", "+List[i].long+"</td>";
+
+                item=item+"<td id='city"+List[i].number+"' class='hidder'>"+List[i].city+"</td>";
+
+                var status=List[i].status;
+                var actualstatus="Open"
+                if(status==0){
+                    actualstatus="Closed"
+                }
+                item=item+"<td id='status"+List[i].number+"' class='hidder'>"+actualstatus+"</td>";
+
+                item=item+"<td class='hidder'>"+ "<button onclick='go("+List[i].number+")' class='edit'><i class='fa fa-pencil-square-o' aria-hidden='true'></i> Edit</button>" +"</td>";
+
+                item=item+"</div></tr>";
+            }
+            item=item+"</table>";
+            document.getElementById("tableArea").innerHTML = item;
+        }
+        showCards();
+    </script>
+</center>
+{%endblock%}

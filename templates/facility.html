@@ -1,0 +1,58 @@
+{%extends "template.html"%}
+{%block content%}
+<center>
+    <div class="card">
+        <p style="text-align: left; padding: 20px;">
+            By including your Medical Pharmacy, you are taking a big step for the well being of the society.
+            The information provided by you will be an invaluable to the people and other authorities. Please ensure that the information
+            is correct and valid.
+        </p>
+        <div>
+            <form method="POST" action="/processing/" autocomplete="off">
+            <h4>Add New Pharmacy</h4>
+            {%if msg%}
+            <div class="error">
+                {{msg}}
+            </div>
+            {%endif%}
+            <label>Facility Name</label>
+            <input type="text" required class="forminput" placeholder="Pharmacy Name" name="addfac" id="addfac">
+            <br>
+            <label>Administrator Key</label>
+            <input type="password" required class="forminput" name="mykey" placeholder="Password Key">
+            <br>
+            <label>Latitude</label>
+            <input type="text" required class="forminput" placeholder="Location Latitude" name="lat" id="lat">
+            <br>
+            <label>Longitude</label>
+            <input type="text" required class="forminput" placeholder="Location Longitude" name="long" id="long">
+            <br>
+            <label>City</label>
+            <input type="text" required class="forminput" placeholder="City" name="addcity" id="addcity">
+            <br><br><br>
+            <button type="submit" class="alertbtn save">Save</button>
+            </form>
+            <a href="/">
+                <button id="addcancel" class="alertbtn cancel" style="margin-top:15px;">
+                Back
+                </button>
+            </a>
+        </div>
+    </div>
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } 
+            else { 
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+        function showPosition(position) {
+            $("#lat").val(position.coords.latitude);
+            $("#long").val(position.coords.longitude);
+        }
+        getLocation();
+    </script>
+</center>
+{%endblock%}
