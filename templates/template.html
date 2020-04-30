@@ -121,13 +121,13 @@
                 table=document.createElement('table');
                 table.classList.add('cardTable');
                 empty=0;
-                item="<table class='hospitalTable' cellspacing='0'><tr><th class='long'>Facility Name</th><th class='small hidder'>Location</th><th class='small hidder'>city</th><th class='small hidder'>Status</th><th class='medium hidder'>Edit</th></tr>";
+                item="<table class='hospitalTable' cellspacing='0'><tr><th class='long'>Facility Name</th><th class='medium hidder'>Location</th><th class='small hidder'>city</th><th class='small hidder'>Status</th><th class='small hidder'></th><th class='small'></th></tr>";
                 for (i=0 ; i<List.length ; i++){
                     if (List[i].name.toLowerCase().includes(inputText.toLowerCase())){
                         item=item+ "<tr><div class='hoverable'><td id='name" + List[i].number + "'>"+List[i].name+"</td>";
 
                         item=item+"<td id='location"+List[i].number+"' class='hidder'>"+List[i].lat+", "+List[i].long+"</td>";
-
+                        url="http://www.google.com/maps/place/"+List[i].lat+","+List[i].long+"";
                         item=item+"<td id='city"+List[i].number+"' class='hidder'>"+List[i].city+"</td>";
 
                         var status=List[i].status;
@@ -138,7 +138,7 @@
                         item=item+"<td id='status"+List[i].number+"' class='hidder'>"+actualstatus+"</td>";
 
                         item=item+"<td class='hidder'>"+ "<button onclick='go("+List[i].number+")' class='edit'><i class='fa fa-pencil-square-o' aria-hidden='true'></i> Edit</button>" +"</td>";
-
+                        item=item+ "<td class='hidder'><a href='" +url+ "' target='_blank'><button class='edit'><i class='fa fa-map-marker' aria-hidden='true'></i> Map</button>" +"</td>";
                         item=item+"</div></tr>";
                         empty=1;
                     }

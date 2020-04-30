@@ -35,12 +35,12 @@
             <a href="/nearby/"><button class="helpnow"><i class="fa fa-heartbeat" aria-hidden="true"></i> &nbsp Show Nearby</button></a>
             </form>
             <a href="/">
-            <button class="helpnow2" style="margin-top:15px;">
-            Home
+            <button class="newhospital" style="margin-top:15px;">
+            <i class="fa fa-home" aria-hidden="true"></i> &nbsp Home
             </button>
             </a>
             
-            <a href="/new/"><button class="newhospital"> &nbsp New Pharmacy</button></a>
+            <a href="/new/"><button class="newhospital"><i class="fa fa-medkit" aria-hidden="true"></i> &nbsp New Pharmacy</button></a>
         </div>
         <div style="text-align: left;padding: 20px;">
         {%if near%}
@@ -86,12 +86,12 @@
         function showCards(){
             table=document.createElement('table');
             table.classList.add('cardTable');
-            item="<table class='hospitalTable' cellspacing='0'><tr><th class='long'>Facility Name</th><th class='small hidder'>Location</th><th class='small hidder'>city</th><th class='small hidder'>Status</th><th class='medium hidder'>Edit</th></tr>";
+            item="<table class='hospitalTable' cellspacing='0'><tr><th class='long'>Facility Name</th><th class='medium hidder'>Location</th><th class='small hidder'>city</th><th class='small hidder'>Status</th><th class='small hidder'></th><th class='small'></th></tr>";
             for (i=0 ; i<List.length ; i++){
                 item=item+ "<tr><div class='hoverable'><td id='name" + List[i].number + "'>"+List[i].name+"</td>";
 
                 item=item+"<td id='location"+List[i].number+"' class='hidder'>"+List[i].lat+", "+List[i].long+"</td>";
-
+                url="http://www.google.com/maps/place/"+List[i].lat+","+List[i].long+"";
                 item=item+"<td id='city"+List[i].number+"' class='hidder'>"+List[i].city+"</td>";
 
                 var status=List[i].status;
@@ -101,7 +101,9 @@
                 }
                 item=item+"<td id='status"+List[i].number+"' class='hidder'>"+actualstatus+"</td>";
 
-                item=item+"<td class='hidder'>"+ "<button onclick='go("+List[i].number+")' class='edit'><i class='fa fa-pencil-square-o' aria-hidden='true'></i> Edit</button>" +"</td>";
+                item=item+"<td class='hidder'>"+ "<button onclick='go("+List[i].number+")' class='edit'><i class='fa fa-pencil-square-o' aria-hidden='true'></i> Edit</button>" +"</a></td>";
+
+                item=item+ "<td class='hidder'><a href='" +url+ "' target='_blank'><button class='edit'><i class='fa fa-map-marker' aria-hidden='true'></i> Map</button>" +"</td>";
 
                 item=item+"</div></tr>";
             }
